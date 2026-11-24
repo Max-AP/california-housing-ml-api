@@ -1,4 +1,38 @@
-# Proyecto Final de Fundamentos de Ciencia de Datos - USFQ
+# California Housing Price Prediction: ML pipeline + FastAPI
+
+> **English summary.** End-to-end regression project on the California housing dataset (20,640 districts):
+> data download, leak-free train/test split, EDA, feature engineering, model selection with
+> cross-validation, hyperparameter tuning, and a FastAPI endpoint that serves predictions.
+
+**Results (from `notebooks/03_experimentacion.ipynb`):**
+
+| Model | Cross-validated RMSE |
+| :--- | ---: |
+| Random Forest | 51,169 |
+| Linear Regression | 66,823 |
+| Decision Tree | 72,102 |
+| SGD Regressor | 235,394 |
+
+After two rounds of grid search, the tuned Random Forest reached a CV RMSE of 49,821 and a
+**test RMSE of 49,605, 58% lower than a median-price baseline (119,460)**. Train RMSE (23,468) is
+well below CV/test, which the notebook flags as an overfitting risk.
+
+**Stack:** Python, pandas, scikit-learn, joblib, FastAPI, Jupyter.
+
+**Run:**
+```bash
+pip install -r requirements.txt
+python -m src.data.make_dataset && python -m src.data.split_data
+python -m src.features.build_features && python -m src.models.train_model
+uvicorn src.api.main:app --reload   # POST /predict
+```
+
+Built on the course template for *Fundamentos de Ciencia de Datos* (MSc Data Science, USFQ).
+The original course instructions (Spanish) follow.
+
+---
+
+## Proyecto Final de Fundamentos de Ciencia de Datos - USFQ
 
 Este es tu entorno de trabajo (*boilerplate*) profesional. Ustedes podrán utilizar este repositorio como base para estructurar su trabajo final o cualquier producto de datos a nivel productivo.
 
